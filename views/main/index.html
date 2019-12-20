@@ -1,0 +1,49 @@
+{%extends 'layout.html'%}
+
+{%block content%}
+    {%for content in contents%}
+    <div class="listBox">
+        <h1>{{content.title}}</h1>
+        <p class="colDefault">
+            Author：<span class="colInfo">{{content.user.username}}</span> -
+            Time：<span class="colInfo">{{content.addTime|date('Y/m/d H:i:s', -8*60)}}</span> -
+            Reading：<span class="colInfo">{{content.views}}</span> -
+            Comments：<span class="colInfo">{{content.comments.length}}</span>
+        </p>
+        <dfn><p>{{content.description}}</p></dfn>
+        <div class="function"><a href="/view?contentid={{content.id}}">Read Full</a></div>
+    </div>
+    {%endfor%}
+
+    <div class="pager">
+        <ul class="clear">
+
+            <li class="previous">
+
+                {%if page <= 1%}
+                <span>No previous!</span>
+                {%else%}
+                <a href="/?category={{category}}&page={{page-1}}">Previous</a>
+                {%endif%}
+
+            </li>
+
+            {%if pages > 0%}
+            <li>
+                <strong>{{page}} / {{pages}}</strong>
+            </li>
+            {%endif%}
+
+            <li class="next">
+
+                {%if page >= pages%}
+                <span>No next!</span>
+                {%else%}
+                <a href="/?category={{category}}&page={{page+1}}">Next</a>
+                {%endif%}
+
+            </li>
+
+        </ul>
+    </div>
+{%endblock%}

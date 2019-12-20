@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+
+<ol class="breadcrumb">
+    <li><a href="/">Management home</a></li>
+    <li><span>Successful information</span></li>
+</ol>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Successful information</h3>
+    </div>
+    <div class="panel-body">{{message}}</div>
+    <div class="panel-footer">
+        <a href="{{url}}">Click here to jump</a>
+    </div>
+</div>
+
+{% endblock %}
