@@ -68,7 +68,7 @@ return s < 10 ? '0' + s : s;
         
 
         console.log('Message from server', event.data);
-        $('#msg').html("Some common<br>"+event.data+"<br>"+getDate()).fadeIn();
+        $('#msg').text("有人评论"+event.data+"-"+getDate()).fadeIn();
         setTimeout(function(){
             $('#msg').fadeOut();
         },3000)
