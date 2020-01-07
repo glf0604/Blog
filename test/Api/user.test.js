@@ -1,8 +1,8 @@
 // user.test.js
-const request = require('superagent')
-const expect = require('chai').expect
+const request = require('superagent');
+const expect = require('chai').expect;
 
-let api_fix = 'http://localhost:8888/api'
+let api_fix = 'http://localhost:8888/api';
 
 describe('test /user/regirrst', function() {
   // 用户注册功能
@@ -14,10 +14,10 @@ describe('test /user/regirrst', function() {
         username: ''
       })
       .end(function(err, res) {
-        expect(res.body.code).to.be.equal(1)
+        expect(res.body.code).to.be.equal(1);
         done()
       })
-  })
+  });
   it('Password cannot null!', function(done) {
     request
       .post(api_fix + '/user/register')
@@ -28,10 +28,10 @@ describe('test /user/regirrst', function() {
         repassword: ''
       })
       .end(function(err, res) {
-        expect(res.body.code).to.be.equal(2)
+        expect(res.body.code).to.be.equal(2);
         done()
       })
-  })
+  });
   it('The two passwords did not match', function(done) {
     request
       .post(api_fix + '/user/register')
@@ -42,10 +42,10 @@ describe('test /user/regirrst', function() {
         repassword: '123123'
       })
       .end(function(err, res) {
-        expect(res.body.code).to.be.equal(3)
+        expect(res.body.code).to.be.equal(3);
         done()
       })
-  })
+  });
   it('Username has been registered', function(done) {
     request
       .post(api_fix + '/user/register')
@@ -56,10 +56,10 @@ describe('test /user/regirrst', function() {
         repassword: 'admin'
       })
       .end(function(err, res) {
-        expect(res.body.code).to.be.equal(4)
+        expect(res.body.code).to.be.equal(4);
         done()
       })
-  })
+  });
   it('Registered successfully', function(done) {
     request
       .post(api_fix + '/user/register')
@@ -70,11 +70,11 @@ describe('test /user/regirrst', function() {
         repassword: '123456'
       })
       .end(function(err, res) {
-        expect(res.body.message).to.be.equal('Registered successfully')
+        expect(res.body.message).to.be.equal('Registered successfully');
         done()
       })
   })
-})
+});
 describe('test /user/login', function() {
   // 登录功能
   it('Username or Password cannot null!', function(done) {
@@ -86,10 +86,10 @@ describe('test /user/login', function() {
         password: ''
       })
       .end(function(err, res) {
-        expect(res.body.code).to.be.equal(1)
+        expect(res.body.code).to.be.equal(1);
         done()
       })
-  })
+  });
   it('Username or Password Error!', function(done) {
     request
       .post(api_fix + '/user/login')
@@ -99,10 +99,10 @@ describe('test /user/login', function() {
         password: '1'
       })
       .end(function(err, res) {
-        expect(res.body.code).to.be.equal(2)
+        expect(res.body.code).to.be.equal(2);
         done()
       })
-  })
+  });
   it('Login Successful!', function(done) {
     request
       .post(api_fix + '/user/login')
@@ -112,11 +112,11 @@ describe('test /user/login', function() {
         password: 'admin'
       })
       .end(function(err, res) {
-        expect(res.body.message).to.be.equal('Login Successful!!')
+        expect(res.body.message).to.be.equal('Login Successful!!');
         done()
       })
   })
-})
+});
 
 // req.cookies.set(
 //   'userInfo',
