@@ -65,10 +65,10 @@ return s < 10 ? '0' + s : s;
 
 
     socket.addEventListener('message', function (event) {
-        
+
 
         console.log('Message from server', event.data);
-        $('#msg').text("有人评论"+event.data+"-"+getDate()).fadeIn();
+        $('#msg').html("Some common<br>"+event.data+"<br>"+getDate()).fadeIn();
         setTimeout(function(){
             $('#msg').fadeOut();
         },3000)

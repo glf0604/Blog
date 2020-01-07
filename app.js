@@ -26,7 +26,7 @@ wss.broadcast = function broadcast(s, ws) {
       client.send(ws.content)
     }
     if (s == 0) {
-      client.send(ws + '退出聊天室')
+      client.send(ws + 'Exit')
     }
     // }
   })
@@ -55,7 +55,7 @@ wss.on('connection', function(ws) {
     try {
       wss.broadcast(0, this.user.name)
     } catch (e) {
-      console.log('刷新页面了')
+      console.log('Refresh')
     }
   })
 })
