@@ -1,7 +1,7 @@
-var assert = require('assert')
+var assert = require('assert');
 
 function formatDate(d) {
-  var date1 = new Date(d)
+  var date1 = new Date(d);
   return (
     date1.getFullYear() +
     '/' +
@@ -23,7 +23,7 @@ describe('Array', function() {
       assert.equal(-1, [1, 2, 3].indexOf(4))
     })
   })
-})
+});
 
 describe('function test ', function() {
   describe('formatDate()', function() {
@@ -31,4 +31,4 @@ describe('function test ', function() {
       assert.equal('2020/1/3  18:8:51', formatDate(1578046131883))
     })
   })
-})
+});
