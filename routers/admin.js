@@ -10,7 +10,7 @@ router.use(function(req, res, next) {
     return
   }
   next()
-})
+});
 
 router.get('/user', function(req, res) {
   var page = Number(req.query.page || 1);
