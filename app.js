@@ -11,11 +11,11 @@ var User = require('./models/User');
 
 var WebSocketServer = require('ws').Server,
   wss = new WebSocketServer({
-    port: 3000 //监听接口
-    // verifyClient: socketVerify //可选，验证连接函数
+    port: 3000
+
   });
 
-//广播
+
 wss.broadcast = function broadcast(s, ws) {
   // console.log(ws);
   // debugger;
@@ -32,13 +32,8 @@ wss.broadcast = function broadcast(s, ws) {
   })
 };
 
-// 初始化
+
 wss.on('connection', function(ws) {
-  // console.log(ws.clients.session);
-  // console.log(wss.clients);
-  // console.log("在线人数", wss.clients.length);
-  // ws.send('你是第' + wss.clients.length + '位');
-  // 发送消息
   ws.on('message', function(jsonStr, flags) {
     console.log(jsonStr);
     var obj = eval('(' + jsonStr + ')');
@@ -50,7 +45,7 @@ wss.on('connection', function(ws) {
       }
     }
   });
-  // 退出聊天
+
   ws.on('close', function(close) {
     try {
       wss.broadcast(0, this.user.name)
