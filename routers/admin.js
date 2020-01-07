@@ -1,28 +1,27 @@
-var express = require('express')
-var router = express.Router()
-var User = require('../models/User')
-var Category = require('../models/Category')
-var Content = require('../models/Content')
+var express = require('express');
+var router = express.Router();
+var User = require('../models/User');
+var Category = require('../models/Category');
+var Content = require('../models/Content');
 
 router.use(function(req, res, next) {
   if (!req.userInfo.isAdmin) {
-    res.send('Sorry, only the administrator can enter the background management!')
+    res.send('Sorry, only the administrator can enter the background management!');
     return
   }
   next()
 })
 
 router.get('/user', function(req, res) {
-  var page = Number(req.query.page || 1)
-  var limit = 10
-  var pages = 0
+  var page = Number(req.query.page || 1);
+  var limit = 10;
+  var pages = 0;
 
   User.count().then(function(count) {
-    pages = Math.ceil(count / limit)
-    page = Math.min(page, pages)
-    page = Math.max(page, 1)
-
-    var skip = (page - 1) * limit
+    pages = Math.ceil(count / limit);
+    page = Math.min(page, pages);
+    page = Math.max(page, 1);
+    var skip = (page - 1) * limit;
 
     User.find()
       .limit(limit)
@@ -39,18 +38,18 @@ router.get('/user', function(req, res) {
         })
       })
   })
-})
+});
 
 router.get('/category', function(req, res) {
-  var page = Number(req.query.page || 1)
-  var limit = 10
-  var pages = 0
+  var page = Number(req.query.page || 1);
+  var limit = 10;
+  var pages = 0;
 
   Category.count().then(function(count) {
-    pages = Math.ceil(count / limit)
-    page = Math.min(page, pages)
-    page = Math.max(page, 1)
-    var skip = (page - 1) * limit
+    pages = Math.ceil(count / limit);
+    page = Math.min(page, pages);
+    page = Math.max(page, 1);
+    var skip = (page - 1) * limit;
 
     Category.find()
       .sort({ _id: -1 })
@@ -67,22 +66,22 @@ router.get('/category', function(req, res) {
         })
       })
   })
-})
+});
 
 router.get('/category/add', function(req, res) {
   res.render('admin/category_add', {
     userInfo: req.userInfo
   })
-})
+});
 
 router.post('/category/add', function(req, res) {
-  var name = req.body.name || ''
+  var name = req.body.name || '';
 
   if (name === '') {
     res.render('admin/error', {
       userInfo: req.userInfo,
       message: 'Name cannot null!'
-    })
+    });
     return
   }
 
@@ -94,7 +93,7 @@ router.post('/category/add', function(req, res) {
         res.render('admin/error', {
           userInfo: req.userInfo,
           message: 'The classification already exists.'
-        })
+        });
         return Promise.reject()
       } else {
         return new Category({
@@ -109,10 +108,10 @@ router.post('/category/add', function(req, res) {
         url: '/admin/category'
       })
     })
-})
+});
 
 router.get('/category/edit', function(req, res) {
-  var id = req.query.id || ''
+  var id = req.query.id || '';
 
   Category.findOne({
     _id: id
@@ -129,17 +128,17 @@ router.get('/category/edit', function(req, res) {
       })
     }
   })
-})
+});
 
 router.get('/', function(req, res, next) {
   res.render('admin/index', {
     userInfo: req.userInfo
   })
-})
+});
 
 router.post('/category/edit', function(req, res) {
-  var id = req.query.id || ''
-  var name = req.body.name || ''
+  var id = req.query.id || '';
+  var name = req.body.name || '';
 
   Category.findOne({
     _id: id
@@ -149,10 +148,10 @@ router.post('/category/edit', function(req, res) {
         res.render('admin/error', {
           userInfo: req.userInfo,
           message: 'Classification information error!'
-        })
+        });
         return Promise.reject()
       } else {
-        if (name == category.name) {
+        if (name === category.name) {
           res.render('admin/success', {
             userInfo: req.userInfo,
             message: 'Modify successful!',
@@ -172,7 +171,7 @@ router.post('/category/edit', function(req, res) {
         res.render('admin/error', {
           userInfo: req.userInfo,
           message: 'The same category already exists in the database.'
-        })
+        });
         return Promise.reject()
       } else {
         return Category.update(
@@ -192,10 +191,10 @@ router.post('/category/edit', function(req, res) {
         url: '/admin/category'
       })
     })
-})
+});
 
 router.get('/category/delete', function(req, res) {
-  var id = req.query.id || ''
+  var id = req.query.id || '';
 
   Category.remove({
     _id: id
@@ -206,19 +205,19 @@ router.get('/category/delete', function(req, res) {
       url: '/admin/category'
     })
   })
-})
+});
 
 router.get('/content', function(req, res) {
-  var page = Number(req.query.page || 1)
-  var limit = 10
-  var pages = 0
+  var page = Number(req.query.page || 1);
+  var limit = 10;
+  var pages = 0;
 
   Content.count().then(function(count) {
-    pages = Math.ceil(count / limit)
-    page = Math.min(page, pages)
-    page = Math.max(page, 1)
+    pages = Math.ceil(count / limit);
+    page = Math.min(page, pages);
+    page = Math.max(page, 1);
 
-    var skip = (page - 1) * limit
+    var skip = (page - 1) * limit;
 
     Content.find()
       .limit(limit)
@@ -238,7 +237,7 @@ router.get('/content', function(req, res) {
         })
       })
   })
-})
+});
 
 router.get('/content/add', function(req, res) {
   Category.find()
@@ -249,14 +248,14 @@ router.get('/content/add', function(req, res) {
         categories: categories
       })
     })
-})
+});
 
 router.post('/content/add', function(req, res) {
   if (req.body.category === '') {
     res.render('admin/error', {
       userInfo: req.userInfo,
       message: 'Content categories cannot be empty!'
-    })
+    });
     return
   }
 
@@ -264,7 +263,7 @@ router.post('/content/add', function(req, res) {
     res.render('admin/error', {
       userInfo: req.userInfo,
       message: 'The content title cannot be empty.'
-    })
+    });
     return
   }
 
@@ -283,17 +282,17 @@ router.post('/content/add', function(req, res) {
         url: '/admin/content'
       })
     })
-})
+});
 
 router.get('/content/edit', function(req, res) {
-  var id = req.query.id || ''
+  var id = req.query.id || '';
 
-  var categories = []
+  var categories = [];
 
   Category.find()
     .sort({ _id: 1 })
     .then(function(rs) {
-      categories = rs
+      categories = rs;
 
       return Content.findOne({
         _id: id
@@ -304,7 +303,7 @@ router.get('/content/edit', function(req, res) {
         res.render('admin/error', {
           userInfo: req.userInfo,
           message: 'The specified content does not exist.'
-        })
+        });
         return Promise.reject()
       } else {
         res.render('admin/content_edit', {
@@ -314,16 +313,16 @@ router.get('/content/edit', function(req, res) {
         })
       }
     })
-})
+});
 
 router.post('/content/edit', function(req, res) {
-  var id = req.query.id || ''
+  var id = req.query.id || '';
 
   if (req.body.category === '') {
     res.render('admin/error', {
       userInfo: req.userInfo,
       message: 'Content categories cannot be empty.'
-    })
+    });
     return
   }
 
@@ -331,7 +330,7 @@ router.post('/content/edit', function(req, res) {
     res.render('admin/error', {
       userInfo: req.userInfo,
       message: 'The content title cannot be empty.'
-    })
+    });
     return
   }
 
@@ -352,10 +351,10 @@ router.post('/content/edit', function(req, res) {
       url: '/admin/content/edit?id=' + id
     })
   })
-})
+});
 
 router.get('/content/delete', function(req, res) {
-  var id = req.query.id || ''
+  var id = req.query.id || '';
 
   Content.remove({
     _id: id
@@ -366,6 +365,6 @@ router.get('/content/delete', function(req, res) {
       url: '/admin/content'
     })
   })
-})
+});
 
-module.exports = router
+module.exports = router;
